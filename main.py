@@ -84,17 +84,13 @@ class RFIDSwipeHandler(webapp.RequestHandler):
                   else:
                      success = False
                      subject = "Reactivate your RFID key now - renew your Hacker Dojo Subscription!"
-                     body = """
-                     Hi %s,
-
-                     It looks like you just tried using your RFID key to open the doors to Hacker Dojo.
-
-                     One teeny tiny issue, it looks like your membership has lapsed!  This can happen by mistake sometimes, so no worries at all.  The good news is you can reactivate your membership with only a few clicks:
-
-                     %s
-
-                     With warmest regards,
-                     The Lobby Door
+                     body = """Hi %s,
+                     \nIt looks like you just tried using your RFID key to open the doors to Hacker Dojo.
+                     \nOne teeny tiny issue, it looks like your membership has lapsed!
+                     \nThis can happen by mistake sometimes, so no worries at all.
+                     \nThe good news is you can reactivate your membership with only a few clicks:
+                     \n%s
+                     \nWith warmest regards, \nThe Lobby Door
                      """ % (m.first_name,m.subscribe_url())
                      deferred.defer(mail.send_mail, sender="Maglock <robot@hackerdojo.com>", to=m.email,
                      subject=subject, body=body, _queue="emailthrottle")    
@@ -711,7 +707,7 @@ class CleanupTask(webapp.RequestHandler):
               \nIf you would like to become a member of Hacker Dojo, just complete the signup process at http://signup.hackerdojo.com
               \nIf you don't want to sign up -- please give us anonymous feedback so we know how we can do better!  URL: http://bit.ly/jJAGYM
               \nCheers!\nHacker Dojo\n\nPS: Please ignore this e-mail if you already signed up -- you might have started signing up twice or something :)
-              PSS: This is an automated e-mail and we're now deleting your e-mail address from the signup application"""
+              \nPSS: This is an automated e-mail and we're now deleting your e-mail address from the signup application"""
           )
         except:  
           noop = True
