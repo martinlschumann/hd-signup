@@ -85,17 +85,17 @@ class RFIDSwipeHandler(webapp.RequestHandler):
                      success = False
                      subject = "Reactivate your RFID key now - renew your Hacker Dojo Subscription!"
                      body = """
-Hi %s,
+                     Hi %s,
 
-It looks like you just tried using your RFID key to open the doors to Hacker Dojo.
+                     It looks like you just tried using your RFID key to open the doors to Hacker Dojo.
 
-One teeny tiny issue, it looks like your membership has lapsed!  This can happen by mistake sometimes, so no worries at all.  The good news is you can reactivate your membership with only a few clicks:
- 
-%s
- 
-With warmest regards,
-The Lobby Door
-""" % (m.first_name,m.subscribe_url())
+                     One teeny tiny issue, it looks like your membership has lapsed!  This can happen by mistake sometimes, so no worries at all.  The good news is you can reactivate your membership with only a few clicks:
+
+                     %s
+
+                     With warmest regards,
+                     The Lobby Door
+                     """ % (m.first_name,m.subscribe_url())
                      deferred.defer(mail.send_mail, sender="Maglock <robot@hackerdojo.com>", to=m.email,
                      subject=subject, body=body, _queue="emailthrottle")    
                 else:
@@ -526,7 +526,7 @@ class MemberListHandler(webapp.RequestHandler):
       user = users.get_current_user()
       if not user:
         self.redirect(users.create_login_url('/memberlist'))
-      signup_users = Membership.all().order("last_name").fetch(10000);
+      signup_users = Membership.all().order('status').order('last_name').fetch(10000);
       self.response.out.write(render('templates/memberlist.html', locals()))
 
 class DebugHandler(webapp.RequestHandler):
